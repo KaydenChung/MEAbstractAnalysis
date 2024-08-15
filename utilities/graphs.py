@@ -14,7 +14,7 @@ def createOccupancyMatrix(wordCounts):
     occupancyMatrix = np.array([list(counts.values()) for counts in wordCounts])
     return occupancyMatrix
 
-def createScatterPlot(occupancyMatrix, NUM):
+def createScatterPlot(occupancyMatrix, data, NUM):
 
     # Scale Data
     scaler = StandardScaler()
@@ -30,7 +30,7 @@ def createScatterPlot(occupancyMatrix, NUM):
 
     # Create Label for Each Point
     for i, index in enumerate(range(NUM)):
-        plt.text(pcaResult[i, 0], pcaResult[i, 1], f"Article {index + 1}", fontsize = 6)
+        plt.text(pcaResult[i, 0], pcaResult[i, 1], f"{data[index][1]} ({data[index][2]})", fontsize = 6)
     plt.title("Scatter Plot of Article Abstracts Grouped by Word Counts")
     plt.xlabel("Principal Component 1")
     plt.ylabel("Principal Component 2")
@@ -38,7 +38,7 @@ def createScatterPlot(occupancyMatrix, NUM):
     plt.show()
 
 # Create Similarity Matrix
-def createSimilarityMatrix(occupancyMatrix, NUM):
+def createSimilarityMatrix(occupancyMatrix, data, NUM):
 
     # Calculate Cosine Distance and Convert to Similarity
     cosineDistances = pdist(occupancyMatrix, metric = 'cosine')
@@ -46,7 +46,7 @@ def createSimilarityMatrix(occupancyMatrix, NUM):
 
     # Create Similarity Matrix
     plt.figure(figsize = (10, 6))
-    ax = sns.heatmap(similarityMatrix, annot = True, cmap = "YlGnBu", xticklabels = [f"Article #{i + 1}" for i in range(NUM)], yticklabels = [f"Article #{i + 1}" for i in range(NUM)], annot_kws = {"size": 6})
+    ax = sns.heatmap(similarityMatrix, annot = True, cmap = "YlGnBu", xticklabels = [f"{data[i][1]} ({data[i][2]})" for i in range(NUM)], yticklabels = [f"{data[i][1]} ({data[i][2]})" for i in range(NUM)], annot_kws = {"size": 6})
     ax.set_xticklabels(ax.get_xticklabels(), fontsize = 6)
     ax.set_yticklabels(ax.get_yticklabels(), fontsize = 6)
     plt.title("Similarity Matrix of Article Abstracts")
@@ -54,12 +54,12 @@ def createSimilarityMatrix(occupancyMatrix, NUM):
     return similarityMatrix
 
 # Create Dendrogram
-def createDendrogram(similarityMatrix, NUM):
+def createDendrogram(similarityMatrix, data, NUM):
 
     # Create Dendrogram Using Hierarchical Clustering
     linkageMatrix = linkage(similarityMatrix, method = 'ward')
     plt.figure(figsize = (10, 6))
-    dendrogram(linkageMatrix, labels = [f"Article #{i + 1}" for i in range(NUM)])
+    dendrogram(linkageMatrix, labels = [f"{data[i][1]} ({data[i][2]})" for i in range(NUM)])
     ax = plt.gca()
     plt.xticks(fontsize = 6)
     plt.yticks(fontsize = 6)

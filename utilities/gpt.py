@@ -16,8 +16,8 @@ def askGPT(abstract):
     client = Client()
     prompt = f"""Given this abstract for a research paper, would this article be suitable 
                 for biotechnological ecosystem service replacement research: {abstract}. 
-                Only reply with \"Yes\" or \"No\". After replying with a yes/no, provide 
-                a brief analysis of the abstract on a newline with no special formatting."""
+                Only reply with \"Yes\", \"Maybe\", or \"No\". After replying with a yes/maybe/no,
+                provide a brief analysis of the abstract on a newline with no special formatting."""
     response = client.chat.completions.create(
         model="gpt-3.5-turbo",  
         provider=You, 

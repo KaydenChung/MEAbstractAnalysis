@@ -11,7 +11,7 @@ from utilities.export import saveToCSV
 
 # Variables
 filename = "data/ES + technologies + aesthetic.xlsx"
-GPT = False
+GPT = True
 NUM = 10
 
 # Get Data
@@ -41,6 +41,9 @@ if(GPT):
         print(f"Analysis: {analysis}\n")
         print("")
 
+    # Save Data to CSV File
+    saveToCSV(data, answerAndAnalysis, NUM)
+
 # Extract Abstracts from Data
 abstracts = [item[3] for item in data[:NUM]]
 
@@ -54,13 +57,10 @@ counts = countWords(abstracts, uniqueWords)
 occupancyMatrix = createOccupancyMatrix(counts)
 
 # Create Scatter Plot
-createScatterPlot(occupancyMatrix, NUM)
+createScatterPlot(occupancyMatrix, data, NUM)
 
 # Create Similarity Matrix
-similarityMatrix = createSimilarityMatrix(occupancyMatrix, NUM)
+similarityMatrix = createSimilarityMatrix(occupancyMatrix, data, NUM)
 
 # Create Dendrogram
-createDendrogram(similarityMatrix, NUM)
-
-# Save Data to CSV File
-saveToCSV(data, answerAndAnalysis, NUM)
+createDendrogram(similarityMatrix, data, NUM)
