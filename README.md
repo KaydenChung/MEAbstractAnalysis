@@ -38,7 +38,7 @@ source .venv/bin/activate
 ```
 pip install -r requirements.txt
 ```
-* Run the Flask App
+* Run the Program
 ```
 python main.py
 ```

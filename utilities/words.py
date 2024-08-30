@@ -48,7 +48,7 @@ def countWords(abstracts, list):
         count = Counter(words)
         
         # Create Dictionary of Unique Word Counts
-        counts = {word: count[word] for word in list}
+        counts = {word: count.get(word, 0) for word in list}
 
         # Sort Dictionary Alphabetically
         counts = dict(sorted(counts.items()))
